@@ -1,12 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { mockReports } from '@/lib/mockData';
-import { logApiRequest, logApiResponse } from '@/lib/logger';
+import { requestMiddleware, createApiResponse, createErrorResponse } from '@/lib/middleware';
 
 export async function GET(request: NextRequest) {
-  const startTime = Date.now();
+  const { startTime, traceId } = requestMiddleware(request);
   const { searchParams } = new URL(request.url);
-  
-  logApiRequest('GET', request.url, request.headers.get('user-agent') || undefined);
   
   try {
     const reportType = searchParams.get('reportType');
@@ -32,10 +30,7 @@ export async function GET(request: NextRequest) {
       filteredReports = filteredReports.filter(report => report.confidenceScore <= parseInt(maxConfidence));
     }
     
-    const duration = Date.now() - startTime;
-    logApiResponse('GET', request.url, 200, duration);
-    
-    return NextResponse.json({
+    return createApiResponse({
       reports: filteredReports,
       total: filteredReports.length,
       filters: {
@@ -43,15 +38,10 @@ export async function GET(request: NextRequest) {
         industry,
         minConfidence,
         maxConfidence
-      }
-    });
+      },
+      traceId
+    }, request, startTime, traceId);
   } catch (error) {
-    const duration = Date.now() - startTime;
-    logApiResponse('GET', request.url, 500, duration);
-    
-    return NextResponse.json(
-      { error: 'Failed to fetch reports' },
-      { status: 500 }
-    );
+    return createErrorResponse('Failed to fetch reports', request, startTime, traceId, 500);
   }
 }
