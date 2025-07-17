@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Send, AlertTriangle, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { FeedbackRequest } from '@/types';
+import { useState } from "react";
+import { Send, AlertTriangle, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { FeedbackRequest } from "@/types";
 
 interface FeedbackFormProps {
   reportId: string;
@@ -15,27 +15,27 @@ interface FeedbackFormProps {
 export function FeedbackForm({ reportId }: FeedbackFormProps) {
   const [feedback, setFeedback] = useState<Partial<FeedbackRequest>>({
     reportId,
-    userComment: '',
-    flaggedSection: '',
-    rating: undefined
+    userComment: "",
+    flaggedSection: "",
+    rating: undefined,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!feedback.userComment?.trim()) {
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
-      const response = await fetch('/api/feedback', {
-        method: 'POST',
+      const response = await fetch("/api/feedback", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(feedback),
       });
@@ -44,20 +44,20 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
         setSubmitted(true);
         setFeedback({
           reportId,
-          userComment: '',
-          flaggedSection: '',
-          rating: undefined
+          userComment: "",
+          flaggedSection: "",
+          rating: undefined,
         });
       }
     } catch (error) {
-      console.error('Failed to submit feedback:', error);
+      console.error("Failed to submit feedback:", error);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleRatingClick = (rating: number) => {
-    setFeedback(prev => ({ ...prev, rating }));
+    setFeedback((prev) => ({ ...prev, rating }));
   };
 
   if (submitted) {
@@ -72,10 +72,7 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
         <p className="text-muted-foreground mb-4">
           Your input helps us improve our reports and analysis quality.
         </p>
-        <Button
-          onClick={() => setSubmitted(false)}
-          variant="outline"
-        >
+        <Button onClick={() => setSubmitted(false)} variant="outline">
           Submit Another Feedback
         </Button>
       </div>
@@ -85,9 +82,12 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-lg font-semibold text-foreground mb-2">Share Your Feedback</h3>
+        <h3 className="text-lg font-semibold text-foreground mb-2">
+          Share Your Feedback
+        </h3>
         <p className="text-sm text-muted-foreground">
-          Help us improve by sharing your thoughts on this report's accuracy, completeness, and usefulness.
+          Help us improve by sharing your thoughts on this report&apos;s
+          accuracy, completeness, and usefulness.
         </p>
       </div>
 
@@ -105,8 +105,8 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
                 onClick={() => handleRatingClick(star)}
                 className={`p-1 rounded focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background ${
                   feedback.rating && feedback.rating >= star
-                    ? 'text-yellow-400'
-                    : 'text-gray-300 dark:text-gray-600 hover:text-yellow-400'
+                    ? "text-yellow-400"
+                    : "text-gray-300 dark:text-gray-600 hover:text-yellow-400"
                 }`}
               >
                 <Star className="w-6 h-6 fill-current" />
@@ -122,13 +122,18 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
 
         {/* Comments */}
         <div>
-          <Label htmlFor="userComment" className="text-sm font-medium text-foreground mb-2 block">
+          <Label
+            htmlFor="userComment"
+            className="text-sm font-medium text-foreground mb-2 block"
+          >
             Your Comments <span className="text-red-500">*</span>
           </Label>
           <textarea
             id="userComment"
             value={feedback.userComment}
-            onChange={(e) => setFeedback(prev => ({ ...prev, userComment: e.target.value }))}
+            onChange={(e) =>
+              setFeedback((prev) => ({ ...prev, userComment: e.target.value }))
+            }
             placeholder="Share your thoughts on the report's accuracy, completeness, or suggest improvements..."
             className="w-full min-h-[100px] px-3 py-2 text-sm border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background resize-y"
             required
@@ -137,7 +142,10 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
 
         {/* Flag Section */}
         <div>
-          <Label htmlFor="flaggedSection" className="text-sm font-medium text-foreground mb-2 block">
+          <Label
+            htmlFor="flaggedSection"
+            className="text-sm font-medium text-foreground mb-2 block"
+          >
             Flag Specific Section (Optional)
           </Label>
           <div className="flex items-center space-x-2 mb-2">
@@ -149,7 +157,12 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
           <Input
             id="flaggedSection"
             value={feedback.flaggedSection}
-            onChange={(e) => setFeedback(prev => ({ ...prev, flaggedSection: e.target.value }))}
+            onChange={(e) =>
+              setFeedback((prev) => ({
+                ...prev,
+                flaggedSection: e.target.value,
+              }))
+            }
             placeholder="e.g., 'Summary paragraph 2' or 'Data visualization on page 3'"
             className="w-full"
           />
@@ -162,23 +175,23 @@ export function FeedbackForm({ reportId }: FeedbackFormProps) {
           </Label>
           <div className="flex flex-wrap gap-2">
             {[
-              'Helpful insights',
-              'Easy to understand',
-              'Missing context',
-              'Unclear data',
-              'Excellent analysis',
-              'Needs more detail'
+              "Helpful insights",
+              "Easy to understand",
+              "Missing context",
+              "Unclear data",
+              "Excellent analysis",
+              "Needs more detail",
             ].map((tag) => (
               <Badge
                 key={tag}
                 variant="outline"
                 className="cursor-pointer hover:bg-muted text-xs"
                 onClick={() => {
-                  const currentComment = feedback.userComment || '';
-                  const newComment = currentComment 
+                  const currentComment = feedback.userComment || "";
+                  const newComment = currentComment
                     ? `${currentComment} #${tag}`
                     : `#${tag}`;
-                  setFeedback(prev => ({ ...prev, userComment: newComment }));
+                  setFeedback((prev) => ({ ...prev, userComment: newComment }));
                 }}
               >
                 {tag}
