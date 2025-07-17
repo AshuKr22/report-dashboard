@@ -122,7 +122,7 @@ export function ReportDetailPanel({ report, isOpen, onClose }: ReportDetailPanel
                     <span className="text-sm font-medium text-foreground">Confidence Score</span>
                     <span className="text-lg font-bold text-foreground">{report.confidenceScore}%</span>
                   </div>
-                  <ConfidenceMeter score={report.confidenceScore} size="lg" />
+                  <ConfidenceMeter score={report.confidenceScore} size="lg" type="dial" />
                 </div>
               </div>
 

@@ -8,12 +8,16 @@ import { Loader2, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from './ThemeToggle';
+import { UserMenu } from './UserMenu';
+import { User } from '@/types';
 
 interface ReportDashboardProps {
   onReportSelect: (report: Report) => void;
+  user: User;
+  onLogout: () => void;
 }
 
-export function ReportDashboard({ onReportSelect }: ReportDashboardProps) {
+export function ReportDashboard({ onReportSelect, user, onLogout }: ReportDashboardProps) {
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -91,6 +95,7 @@ export function ReportDashboard({ onReportSelect }: ReportDashboardProps) {
                 {filteredReports.length} reports
               </span>
               <ThemeToggle />
+              <UserMenu user={user} onLogout={onLogout} />
             </div>
           </div>
         </div>
