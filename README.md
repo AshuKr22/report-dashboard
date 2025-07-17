@@ -10,7 +10,7 @@ A modern dashboard for viewing and analyzing business reports with AI confidence
 - User authentication (viewer/reviewer roles)
 - Feedback system for reports
 - Dark/light theme toggle
-- Responsive design
+- Request middleware with latency logging and UUID trace headers
 
 ## Tech Stack
 
