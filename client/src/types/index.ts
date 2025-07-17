@@ -2,9 +2,18 @@ export interface Report {
   id: string;
   title: string;
   summary: string;
-  reportType: 'market-analysis' | 'financial-audit' | 'risk-assessment' | 'compliance';
+  reportType:
+    | "market-analysis"
+    | "financial-audit"
+    | "risk-assessment"
+    | "compliance";
   confidenceScore: number;
-  industry: 'technology' | 'healthcare' | 'finance' | 'retail' | 'manufacturing';
+  industry:
+    | "technology"
+    | "healthcare"
+    | "finance"
+    | "retail"
+    | "manufacturing";
   createdAt: string;
   author: string;
   sources: SourceTrace[];
@@ -13,11 +22,21 @@ export interface Report {
 
 export interface SourceTrace {
   id: string;
-  type: 'data-source' | 'methodology' | 'expert-review' | 'validation';
+  type:
+    | "website"
+    | "news"
+    | "scholar"
+    | "social-media"
+    | "industry-report"
+    | "government-data";
   title: string;
+  url: string;
   description: string;
+  publisher: string;
+  publishedDate: string;
   reliability: number;
-  lastUpdated: string;
+  accessDate: string;
+  citation: string;
 }
 
 export interface FeedbackRequest {
@@ -29,6 +48,6 @@ export interface FeedbackRequest {
 
 export interface User {
   id: string;
-  role: 'viewer' | 'reviewer';
+  role: "viewer" | "reviewer";
   name: string;
 }
