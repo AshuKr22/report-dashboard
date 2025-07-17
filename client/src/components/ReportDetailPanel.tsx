@@ -93,10 +93,10 @@ export function ReportDetailPanel({
               stiffness: 300,
               mass: 0.8,
             }}
-            className="fixed top-0 right-0 h-full w-full max-w-2xl bg-background border-l border-border shadow-2xl z-50"
+            className="fixed top-0 right-0 h-full w-full max-w-2xl bg-background border-l border-border shadow-2xl z-50 flex flex-col"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border">
+            <div className="flex items-center justify-between p-6 border-b border-border flex-shrink-0">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center space-x-2">
                   <TrendingUp className="w-5 h-5 text-primary" />
@@ -116,7 +116,7 @@ export function ReportDetailPanel({
             </div>
 
             {/* Content */}
-            <div className="flex-1 overflow-y-auto">
+            <div className="flex-1 overflow-y-auto min-h-0">
               <div className="p-6">
                 {/* Report Header */}
                 <div className="mb-6">
